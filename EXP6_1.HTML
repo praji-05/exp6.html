@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Calculator App</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: black;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    input[type="number"] {
+      padding: 8px;
+      margin: 10px;
+      width: 150px;
+      font-size: 16px;
+    }
+    button {
+      background: #2600ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .result-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .box {
+      width: 22%;
+      padding: 15px;
+      color: white;
+      border-radius: 8px;
+      font-size: 18px;
+      text-align: center;
+    }
+    .room { background: #2600d9; }
+    .accessories { background: #2ECC40; }
+    .emergency { background: #36bfff; }
+    .saving { background: #c90d6b; }
+  </style>
+</head>
+<body>
+
+  <div class="header">Budget Calculator App</div>
+
+  <div class="container">
+    <h3>Enter Amount that you want to Manage</h3>
+    <input type="number" id="totalAmount" placeholder="Total Amount">
+
+    <h3>How would you like to divide your money?</h3>
+    <div>
+      Room Rent(%) <input type="number" id="roomRent" value="35">
+      Accessories(%) <input type="number" id="accessories" value="15">
+      Emergency(%) <input type="number" id="emergency" value="20">
+      Saving(%) <input type="number" id="saving" value="30">
+    </div>
+
+    <button id="evaluate">Evaluate My Money</button>
+
+    <div class="result-container">
+      <div class="box room" id="roomBox">Room Rent<br>Rs.0.00</div>
+      <div class="box accessories" id="accessoriesBox">Accessories<br>Rs.0.00</div>
+      <div class="box emergency" id="emergencyBox">Emergency<br>Rs.0.00</div>
+      <div class="box saving" id="savingBox">Saving<br>Rs.0.00</div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#evaluate").click(function() {
+        let total = parseFloat($("#totalAmount").val());
+        let roomPercent = parseFloat($("#roomRent").val());
+        let accessoriesPercent = parseFloat($("#accessories").val());
+        let emergencyPercent = parseFloat($("#emergency").val());
+        let savingPercent = parseFloat($("#saving").val());
+
+        let totalPercent = roomPercent + accessoriesPercent + emergencyPercent + savingPercent;
+
+        if (isNaN(total) || total <= 0) {
+          alert("Please enter a valid total amount.");
+          return;
+        }
+
+        if (totalPercent !== 100) {
+          alert("Total of all percentages must be 100%. Currently it’s " + totalPercent + "%");
+          return;
+        }
+
+        let roomAmount = (total * roomPercent / 100).toFixed(2);
+        let accessoriesAmount = (total * accessoriesPercent / 100).toFixed(2);
+        let emergencyAmount = (total * emergencyPercent / 100).toFixed(2);
+        let savingAmount = (total * savingPercent / 100).toFixed(2);
+
+        $("#roomBox").html("Room Rent<br>Rs." + roomAmount);
+        $("#accessoriesBox").html("Accessories<br>Rs." + accessoriesAmount);
+        $("#emergencyBox").html("Emergency<br>Rs." + emergencyAmount);
+        $("#savingBox").html("Saving<br>Rs." + savingAmount);
+      });
+    });
+  </script>
+
+</body>
+</html>
